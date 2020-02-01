@@ -14,6 +14,7 @@ $(document).ready(function () {
 
   database = firebase.database()
 
+  // function to load bouncing dots to display on DOM to show user site is working on finding results
   var loaderBounce = function () {
     $("#resultCard").html("<div class='bouncing-loader'><div></div><div></div><div></div></div>")
   }
@@ -53,39 +54,44 @@ $(document).ready(function () {
 
         var imgSRC;
 
+        // chooses which image to use
         if (eventData[i].image === null) {
           imgSRC = "assets/images/unboremini.png";
         } else {
           imgSRC = "http:" + eventData[i].image.medium.url;
         }
-        // console.log(imgSRC);
 
+        // grabs country data from event API
         newCountry = $("<p>")
         newCountry.text(eventData[i].country_name)
 
+        // grabs city data from event API
         newCity = $("<p>")
         newCity.text(eventData[i].city_name)
 
+        // grabs event start time
         newTime = $("<p>")
         newTime.text(eventData[i].start_time)
 
+        // populates the event title
         newTitle = $("<h5>")
         newTitle.addClass("truncate-text")
         newTitle.text(eventData[i].title)
 
+        // populates event address
         newAddress = $("<p>")
         newAddress.text(eventData[i].venue_address)
         newAddress.addClass("location")
 
+        // populates event/placeholder image
         newImage = $("<img src='" + imgSRC + "'>")
         newImage.addClass("eventPic")
         eventData[i].url
 
+        // create facebook share button
         newShareButton = $("<div>")
         newShareButton.addClass("fb-share-button")
         newShareButton.attr({ "data-href": eventData[i].url, "data-layout": "button", "data-size": "large" })
-        // newShareButton.attr("data-layout", "button")
-        // newShareButton.attr("data-size", "large")
         shareAnchor = $("<a>")
         shareAnchor.attr("target", "_blank")
         var shareURL = "https://www.facebook.com/sharer/sharer.php?u=" + eventData[i].url
@@ -94,12 +100,14 @@ $(document).ready(function () {
         shareAnchor.text("Share")
         newShareButton.append(shareAnchor)
 
+        // creates anchor with event info link
         newURL = $("<a>")
         newURL.attr("target", "_blank")
         newURL.attr("href", eventData[i].url)
         newURL.text("Event Info")
         newURL.addClass("btn btn-primary")
 
+        // creates map button to address
         newMap = $("<div>")
         newMap.attr("id", "map")
         newMap.attr("style", "display:none")
@@ -110,10 +118,12 @@ $(document).ready(function () {
         newButton.addClass("map btn btn-primary")
 
 
+        // appends all above to individual divs
         newEvent = $("<div>")
         newEvent.append(newImage, newTitle, newAddress, newTime, newURL, newShareButton, newButton)
         newEvent.addClass("column cards")
 
+        // appends dynamically generated divs to DOM
         $("#resultCard").append(newEvent)
         FB.XFBML.parse()
       }
@@ -202,16 +212,15 @@ $(document).ready(function () {
       alert("location needed")
       return false;
     } else {
+      // empties result card div
       $("#resultCard").empty();
+      // runs loaderBounce function
       loaderBounce();
       // Storing the search queries
       var submitData = {
-        //  searchTerm : $("#searchTerm").val().trim(),
         category: $("#category option:selected").text().trim(),
         location: $("#state").val().trim(),
-        //  city : $("#city").val().trim(),
         radius: $("#radius").val().trim(),
-        //   where : state + city
       }
 
       // Running the searchEvents function(passing search queries as arguments)
@@ -281,7 +290,33 @@ $(document).ready(function () {
     Cultural = snapshot.val().cultural
     TradeShow = snapshot.val().tradeShow
     Sports = snapshot.val().sports
+
+    // finds highest number of all categories and then finds it and adds what people find most interseting into the page
+    var pplSearch = Math.max(Food, Music, Comedy, Literature, Art, Carnival, Cultural, TradeShow, Sports)
+    if (pplSearch === Food) {
+      $("#favSearch").html("People enjoy searching for food")
+    } else if (pplSearch === Music) {
+      $("#favSearch").html("People enjoy searching for music")
+    } else if (pplSearch === Comedy) {
+      $("#favSearch").html("People enjoy searching for comedy")
+    } else if (pplSearch === Literature) {
+      $("#favSearch").html("People enjoy searching for literatur")
+    } else if (pplSearch === Art) {
+      $("#favSearch").html("People enjoy searching for art")
+    } else if (pplSearch === Carnival) {
+      $("#favSearch").html("People enjoy searching for carnival")
+    } else if (pplSearch === Cultural) {
+      $("#favSearch").html("People enjoy searching for cultural")
+    } else if (pplSearch === TradeShow) {
+      $("#favSearch").html("People enjoy searching for trade shows")
+    } else if (pplSearch === Sports) {
+      $("#favSearch").html("People enjoy searching for sports")
+    } else {
+      console.log("highest search record error")
+    }
   })
+
+
 
 
 

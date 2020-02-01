@@ -24,7 +24,8 @@
           <img class="thumbnail" src="assets/images/unboreme.png">
           <h5>UnBore Me</h5>
           <p>The one stop to find events happening in your area! Search from a wide list of categories to find stuff to
-            do that interests YOU!</p>
+            do that interests YOU!</p> <br><br><br>
+            <div id="favSearch"></div>
         </div>
       </div>
 
@@ -39,7 +40,7 @@
           <div class="row column">
             <form class="col-md-12 text-center">
               <!-- Category Drop Down menu selection -->
-              <h3 class="text-center font-weight-bold">Category</h3>
+              <h3 class="text-center searchParam">Category</h3>
               <select id="category">
                 <option value="">Select One</option>
                 <option value="Food">Food</option>
@@ -57,13 +58,13 @@
               <!-- City/State input-->
               <div class="form-group">
                 <label for="state" class="col-md-12">
-                  <h3 class="text-center font-weight-bold">Location</h3>
+                  <h3 class="text-center searchParam">Location</h3>
                 </label>
                 <input type="text" class="form-control text-center" id="state" placeholder="City, State">
               </div>
               <!-- Radius input -->
               <form class="col-md-12 text-center">
-                <h3 class="text-center font-weight-bold">Search Radius</h3>
+                <h3 class="text-center searchParam">Search Radius</h3>
                 <select id="radius">
                   <option value="5">5 Miles</option>
                   <option value="10">10 Miles</option>
